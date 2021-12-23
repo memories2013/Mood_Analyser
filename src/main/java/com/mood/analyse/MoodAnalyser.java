@@ -1,5 +1,8 @@
 package com.mood.analyse;
 
+import com.mood.exception.ExceptionTypes;
+import com.mood.exception.MoodAnalysisException;
+
 public class MoodAnalyser {
 
 	private String message;
@@ -13,15 +16,15 @@ public class MoodAnalyser {
 		this.message = message;
 	}
 
-	public String moodAnalyse() throws NullPointerException{
-		try {
-			String words[] = message.split(" ");
-			if (words[3].equalsIgnoreCase("sad"))
-				return "SAD";
-			return "HAPPY";
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			return "HAPPY";
-		}
+	public String moodAnalyse() throws Exception {
+		if (message == null)
+			throw new MoodAnalysisException(" The string is null", ExceptionTypes.NULL);
+		if (message.equals(""))
+			throw new MoodAnalysisException(" The string is empty", ExceptionTypes.EMPTY_STRING);
+
+		String words[] = message.split(" ");
+		if (words[3].equalsIgnoreCase("sad"))
+			return "SAD";
+		return "HAPPY";
 	}
 }
